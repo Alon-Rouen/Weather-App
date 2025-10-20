@@ -6,13 +6,9 @@
 //
 
 import SwiftUI
+import Foundation
 
-struct Constants: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-#Preview {
-    Constants()
+enum Constants {
+    static let weatherAPIKey = "KEY" //<--Mettre la clef du site weatherAPI
+    static let weatherBaseURL = "https://api:weatherapi.com/v1"
 }
