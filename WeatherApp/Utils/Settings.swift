@@ -6,13 +6,22 @@
 //
 
 import SwiftUI
+import Foundation
 
-struct Settings: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+enum TemperatureUnit: String {
+    case celsius, fahrenheit
 }
 
-#Preview {
-    Settings()
+final class Settings: ObservableObject {
+    static let shared = Settings()
+    @Published var tempUnit: TemperatureUnit {
+        didSet{
+            UserDefaults.standard.set(tempUnit.rawValue, forKey: "tempUnitKey")
+        }
+    }
+    
+    private init() {
+        let raw = UserDefaults.standard.string(forKey: "tempUnitKey") ?? TemperatureUnit.celsius.rawValue
+        tempUnit = TemperatureUnit(rawValue: raw) ?? .celsius
+    }
 }

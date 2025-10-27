@@ -6,13 +6,10 @@
 //
 
 import SwiftUI
+import Foundation
 
-struct WeatherService: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-#Preview {
-    WeatherService()
+final class WeatherService {
+    private let apiKey = Constants.weatherAPIKey
+    private let base = Constants.weatherBaseURL
+    
 }
