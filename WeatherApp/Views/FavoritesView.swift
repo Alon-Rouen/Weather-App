@@ -8,11 +8,24 @@
 import SwiftUI
 
 struct FavoritesView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    @ObservedObject var favs: FavoritesManager
+    var vm: WeatherViewModel
+    @State private var selectedCity: String?
 
-#Preview {
-    FavoritesView()
+    var body: some View {
+        List {
+            ForEach(favs.cities, id: \.self) { city in
+                Button(city) {
+                    selectedCity = city
+                    vm.fetch(city: city)
+                }
+            }
+            .onDelete { indexSet in
+                indexSet.forEach { index in
+                    favs.remove(favs.cities[index])
+                }
+            }
+        }
+        .navigationTitle("Favoris")
+    }
 }

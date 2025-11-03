@@ -6,13 +6,22 @@
 //
 
 import SwiftUI
+import Foundation
 
-struct CacheManager: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+final class CacheManager {
+    static let shared = CacheManager()
+    private init() {}
+
+    private let key = "cachedWeather"
+
+    func save(_ weather: WeatherResponse) {
+        if let data = try? JSONEncoder().encode(weather) {
+            UserDefaults.standard.set(data, forKey: key)
+        }
     }
-}
 
-#Preview {
-    CacheManager()
+    func load() -> WeatherResponse? {
+        guard let data = UserDefaults.standard.data(forKey: key) else { return nil }
+        return try? JSONDecoder().decode(WeatherResponse.self, from: data)
+    }
 }

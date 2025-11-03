@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Foundation
+import Combine
 
 enum TemperatureUnit: String {
     case celsius, fahrenheit
@@ -15,11 +16,11 @@ enum TemperatureUnit: String {
 final class Settings: ObservableObject {
     static let shared = Settings()
     @Published var tempUnit: TemperatureUnit {
-        didSet{
+        didSet {
             UserDefaults.standard.set(tempUnit.rawValue, forKey: "tempUnitKey")
         }
     }
-    
+
     private init() {
         let raw = UserDefaults.standard.string(forKey: "tempUnitKey") ?? TemperatureUnit.celsius.rawValue
         tempUnit = TemperatureUnit(rawValue: raw) ?? .celsius
